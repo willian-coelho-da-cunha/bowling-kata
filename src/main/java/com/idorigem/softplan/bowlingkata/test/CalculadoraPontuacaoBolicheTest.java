@@ -89,7 +89,7 @@ public class CalculadoraPontuacaoBolicheTest {
 		);
 	}
 
-	/** Test if there are some negative play. */
+	/** Test if there are some play with its value is greater than 10. */
 	@Test
 	public void pontuacaoDoJogoTestH() {
 		int[] pinosDerrubados = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 2, 3, 0, 0};
