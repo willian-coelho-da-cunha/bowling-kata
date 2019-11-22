@@ -1,4 +1,4 @@
-package com.idorigem.softplan.bowlingkata.test;
+package com.idorigem.softplan.bowlingkata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
