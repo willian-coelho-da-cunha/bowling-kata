@@ -1,4 +1,4 @@
-package com.idorigem.softplan.bowlingkata;
+package com.idorigem.softplan.bowlingKata;
 
 public class CalculadoraPontuacaoBoliche {
 

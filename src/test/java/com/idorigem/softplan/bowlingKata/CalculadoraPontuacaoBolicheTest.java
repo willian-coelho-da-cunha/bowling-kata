@@ -1,11 +1,11 @@
-package com.idorigem.softplan.bowlingkata;
+package com.idorigem.softplan.bowlingKata;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.idorigem.softplan.bowlingkata.service.CalculadoraPontuacaoBoliche;
+import com.idorigem.softplan.bowlingKata.CalculadoraPontuacaoBoliche;
 
 public class CalculadoraPontuacaoBolicheTest {
 	
