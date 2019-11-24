@@ -18,22 +18,6 @@ The goal is to create a class that can calculate the total score of a bowling ga
   - Choose 'Run As' option;
   - And Choose 'JUnit'.
 
-- If you don't find the command 'Run As > JUnit', try the following:
-
-  - Right-click on project name;
-  - Select 'Maven' option;
-  - Select 'Add dependency' option;
-  - On the opened window, write 'junit-jupiter';
-  - Select the option with the name 'junit-jupiter';
-  - Click on the 'Ok' button;
-  - Right-click on project name again;
-  - Select 'Maven' option;
-  - Select 'Update project' option;
-  - Wait for the project update to finish;
-  - Right-click on project name;
-  - Select 'Run As' option;
-  - And now, 'JUnit' option should appear.
-
 - If you can't see the tests running, try the following:
 
   - Click on 'Window' menu;
@@ -59,3 +43,7 @@ Version 1. Review in October 26th, 2019.
 Version 2. Review in November 10th, 2019.
 
 - Change this file and make some improvements to project settings.
+
+Version 3. Review in November 24th, 2019.
+
+- I am improving this project with mentoring of Leandro Boeing Vieira. I removed spring boot and Maven from the project, created another source folder to put tests sources in, and added JUnit 5 library.
