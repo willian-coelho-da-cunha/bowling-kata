@@ -2,97 +2,119 @@ package com.idorigem.softplan.bowlingKata;
 
 public class CalculadoraPontuacaoBoliche {
 
-	/**
-	 * @param posicaoUltimaJogada Normal position (without strike(s) and spare(s)).
-	 */
-	private void validarQuantidadeJogadas(int[] jogadas, int posicaoUltimaJogada) {
-		int quantidadeJogadas = 0;
-
-		if (jogadas[posicaoUltimaJogada] == 10) {
-			/** strike */
-			quantidadeJogadas = posicaoUltimaJogada + 2;
-		} else {
-			int rodadaFinal = jogadas[posicaoUltimaJogada -1] + jogadas[posicaoUltimaJogada];
-			if (rodadaFinal == 10) {
-				/** spare */
-				quantidadeJogadas = posicaoUltimaJogada + 1;
-			} else {
-				quantidadeJogadas = posicaoUltimaJogada;
+	private void validarJogadas(int[] jogadas) {
+		if (jogadas != null) {
+			for(int jogada : jogadas) {
+				if (jogada < 0) {
+					throw new IllegalArgumentException(
+						"Sentimos muito! Algo não ocorreu bem :( , Algumas jogadas possuem valor negativo."
+					);
+				} else if (jogada > 10) {
+					throw new IllegalArgumentException(
+						"Sentimos muito! Algo não ocorreu bem :( , Algumas jogadas possuem valor maior do que 10."
+					);
+				}
 			}
+		} else {
+			throw new NullPointerException(
+				"Sentimos muito! Algo não ocorreu bem :( , O argumento informado ao método não pode ser null."
+			);
 		}
-		
-		if ((jogadas.length - 1) > quantidadeJogadas) {
-			throw new RuntimeException(
-				"Sentimos muito! Algo não ocorreu bem :( , Há mais jogadas do que o esperado. " +
+	}
+
+	private void validarRodadas(int[] jogadas) {
+		byte quantidadeRodadas = 0;
+
+		for(int jogada : jogadas) {
+			quantidadeRodadas += jogada == 10 ? 2 : 1;
+		}
+
+		if (!(quantidadeRodadas == 24 || quantidadeRodadas == 23 || quantidadeRodadas == 22 || quantidadeRodadas == 21 || quantidadeRodadas == 20)) {
+			throw new IllegalArgumentException(
+				"Sentimos muito! Algo não ocorreu bem :( , A quantidade de rodadas é diferente do que o esperado. " +
 				"Por gentileza, verifique os valores informados."
 			);
 		}
 	}
 
-	private int validarRodadas(int[] jogadas) {
-		try {
-			int posicaoUltimaJogada = 0;
+	private int calcularPontuacaoStrike(int[] jogadas) {
+		byte proximoFatorMultiplicacao = 0;
+		byte fatorMultiplicacao = 0;
+		byte quantidadeRodadas = 0;
+		int pontuacao = 0;
 
-			for(int rodada = 1; rodada <= 10; rodada++) {
-				if (jogadas[posicaoUltimaJogada] == 10) {
-					if (rodada < 10) {
-						posicaoUltimaJogada++;
-					}
+		for(int jogada : jogadas) {
+			pontuacao += jogada * fatorMultiplicacao;
+			if (quantidadeRodadas < 20) {
+				if (jogada == 10) {
+					fatorMultiplicacao = (byte)(proximoFatorMultiplicacao != 0 ? 2 : 1);
+					proximoFatorMultiplicacao = 1;
+					quantidadeRodadas += 2;
 				} else {
-					if (rodada < 10) {
-						posicaoUltimaJogada += 2;
-					} else {
-						posicaoUltimaJogada++;
-					}
+					fatorMultiplicacao = proximoFatorMultiplicacao;
+					proximoFatorMultiplicacao = 0;
+					quantidadeRodadas += 1;
 				}
+			} else {
+				fatorMultiplicacao = proximoFatorMultiplicacao = 1;
 			}
-			
-			return posicaoUltimaJogada;
-
-		} catch(Exception exception) {
-			throw new RuntimeException("Sentimos muito! Algo não ocorreu bem :( , Rodadas inválidas.");
 		}
+		return pontuacao;
 	}
 
-	private void validarJogadas(int[] jogadas) {
-		for(int posicao = 0; posicao < jogadas.length; posicao++) {
-			if (jogadas[posicao] < 0) {
-				throw new RuntimeException("Sentimos muito! Algo não ocorreu bem :( , Algumas jogadas possuem valor negativo.");
+	private int calcularPontuacaoSpare(int[] jogadas) {
+		byte quantidadeJogadasRodada = 0;
+		boolean somarProximaJogada = false;
+		int[] jogadasRodada = new int[2];
+		int pontuacao = 0;
+
+		for(int jogada : jogadas) {
+			quantidadeJogadasRodada++;
+			if (somarProximaJogada) {
+				pontuacao += jogada;
+				somarProximaJogada = false;
 			}
-			
-			if (jogadas[posicao] > 10) {
-				throw new RuntimeException("Sentimos muito! Algo não ocorreu bem :( , Algumas jogadas possuem valor maior do que 10.");
+			if (jogada != 10) {
+				jogadasRodada[quantidadeJogadasRodada - 1] = jogada;
+				if (quantidadeJogadasRodada == 2) {
+					somarProximaJogada = (jogadasRodada[0] + jogadasRodada[1]) == 10;
+					quantidadeJogadasRodada = 0;
+					jogadasRodada = new int[2];
+				}
+			} else {
+				quantidadeJogadasRodada = 0;
 			}
 		}
+		return pontuacao;
+	}
+
+	private int calcularPontuacao(int[] jogadas) {
+		byte quantidadeJogadasRodada = 0;
+		byte quantidadeRodadas = 0;
+		int pontuacao = 0;
+
+		for(int jogada : jogadas) {
+			if (quantidadeRodadas < 10) {
+				if (jogada != 10) {
+					quantidadeJogadasRodada = (byte)(quantidadeJogadasRodada == 0 ? 1 : 0);
+				}
+				if (quantidadeJogadasRodada == 0) {
+					quantidadeRodadas++;
+				}
+				pontuacao += jogada;
+			}
+		}
+		return pontuacao;
 	}
 
 	public int pontuacaoDoJogo(int[] jogadas) {
 		this.validarJogadas(jogadas);
+		this.validarRodadas(jogadas);
 
-		int posicaoUltimaJogada = this.validarRodadas(jogadas);
-		this.validarQuantidadeJogadas(jogadas, posicaoUltimaJogada);
-
-		int pontuacaoDoJogo = 0;
-		int posicao = 0;
-		
-		for(int rodada = 1; rodada <= 10; rodada++) {
-			pontuacaoDoJogo += jogadas[posicao];
-			
-			if (jogadas[posicao] == 10) {
-				pontuacaoDoJogo += jogadas[posicao + 1];
-				pontuacaoDoJogo += jogadas[posicao + 2];
-				posicao++;
-				continue;
-			} else {
-				pontuacaoDoJogo += jogadas[posicao + 1];
-
-				if ((jogadas[posicao] + jogadas[posicao + 1]) == 10) {
-					pontuacaoDoJogo += jogadas[posicao + 2];
-				}
-				
-				posicao += 2;
-			}
-		}
-		return pontuacaoDoJogo;
+		int pontuacao = 0;
+		pontuacao += this.calcularPontuacao(jogadas);
+		pontuacao += this.calcularPontuacaoSpare(jogadas);
+		pontuacao += this.calcularPontuacaoStrike(jogadas);
+		return pontuacao;
 	}
 }
