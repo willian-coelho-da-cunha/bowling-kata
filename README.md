@@ -4,7 +4,7 @@ The goal is to create a class that can calculate the total score of a bowling ga
 
 ## Project execution
 
-***Important:*** In this project, you can only run tests to see the result of the implemented class.
+***Important:*** In this project, you can only run tests to test the implemented class.
 
 - One way to do this (others may exist):
 
@@ -27,7 +27,7 @@ The goal is to create a class that can calculate the total score of a bowling ga
   - Select 'JUnit' option.
   - And, click on 'Open' button.
 
-## Developers
+## Contributors
 
 This project was created in the context of a pair programming held on October 24th, 2019.
 
@@ -46,4 +46,8 @@ Version 2. Review in November 10th, 2019.
 
 Version 3. Review in November 24th, 2019.
 
-- I am improving this project with mentoring of Leandro Boeing Vieira. I removed spring boot and Maven from the project, created another source folder to put tests sources in, and added JUnit 5 library.
+- With mentoring of Leandro Boeing Vieira, I removed spring boot and Maven from the project, created another source folder to put tests sources in, and added JUnit 5 library.
+
+Version 4. Review in July 09th, 2020.
+
+- With mentoring of Leandro Boeing Vieira, I changed the name of the test methods to enable a future documentation of the project. And, I improved the implementation of the CalculadoraPontuacaoBoliche class.
