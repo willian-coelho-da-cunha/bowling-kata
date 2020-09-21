@@ -31,8 +31,7 @@ public class CalculadoraPontuacaoBoliche {
 
 		if (!(quantidadeRodadas == 24 || quantidadeRodadas == 23 || quantidadeRodadas == 22 || quantidadeRodadas == 21 || quantidadeRodadas == 20)) {
 			throw new IllegalArgumentException(
-				"Sentimos muito! Algo não ocorreu bem :( , A quantidade de rodadas é diferente do que o esperado. " +
-				"Por gentileza, verifique os valores informados."
+				"Sentimos muito! Algo não ocorreu bem :( , A quantidade de rodadas é diferente do que o esperado. Por gentileza, verifique os valores informados."
 			);
 		}
 	}
