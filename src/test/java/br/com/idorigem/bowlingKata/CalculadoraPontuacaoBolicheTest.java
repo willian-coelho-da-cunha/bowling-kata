@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import br.com.idorigem.bowlingKata.exception.MatchesQuantityBiggerThanExpectedException;
+import br.com.idorigem.bowlingKata.exception.NegativeValueException;
+import br.com.idorigem.bowlingKata.exception.ValueBiggerThanExpectedException;
+
 public class CalculadoraPontuacaoBolicheTest {
 
 	private final CalculadoraPontuacaoBoliche calculadoraPontuacaoBoliche = new CalculadoraPontuacaoBoliche();
@@ -71,13 +75,13 @@ public class CalculadoraPontuacaoBolicheTest {
 		final int[] pinosDerrubadosSegundoJogo = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 2, 3, 0, 0, 0 };
 		final int[] pinosDerrubadosTerceiroJogo = { 10, 7, 1, 10, 5, 5, 10, 0, 7, 0, 0, 10, 2, 3, 10, 10, 10, 10 };
 		
-		Exception exceptionFirstGame = assertThrows(IllegalArgumentException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubadosPrimeiroJogo));
+		Exception exceptionFirstGame = assertThrows(MatchesQuantityBiggerThanExpectedException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubadosPrimeiroJogo));
 		assertEquals("Sentimos muito! Algo não ocorreu bem :( , A quantidade de rodadas é diferente do que o esperado. Por gentileza, verifique os valores informados.", exceptionFirstGame.getMessage());
 
-		Exception exceptionSecondGame = assertThrows(IllegalArgumentException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubadosSegundoJogo));
+		Exception exceptionSecondGame = assertThrows(MatchesQuantityBiggerThanExpectedException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubadosSegundoJogo));
 		assertEquals("Sentimos muito! Algo não ocorreu bem :( , A quantidade de rodadas é diferente do que o esperado. Por gentileza, verifique os valores informados.", exceptionSecondGame.getMessage());
 
-		Exception exceptionThirdGame = assertThrows(IllegalArgumentException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubadosTerceiroJogo));
+		Exception exceptionThirdGame = assertThrows(MatchesQuantityBiggerThanExpectedException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubadosTerceiroJogo));
 		assertEquals("Sentimos muito! Algo não ocorreu bem :( , A quantidade de rodadas é diferente do que o esperado. Por gentileza, verifique os valores informados.", exceptionThirdGame.getMessage());
 	}
 
@@ -85,7 +89,7 @@ public class CalculadoraPontuacaoBolicheTest {
 	public void umJogoQueTenhaUmaOuMaisRodadasComPontuacaoNegativaDeveResultarEmUmaExcessaoDoTipoArgumentoIlegal() {
 		final int[] pinosDerrubados = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10, 2, 3, 0, 0 };
 		
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubados));
+		Exception exception = assertThrows(NegativeValueException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubados));
 		assertEquals("Sentimos muito! Algo não ocorreu bem :( , Algumas jogadas possuem valor negativo.", exception.getMessage());
 	}
 
@@ -93,7 +97,7 @@ public class CalculadoraPontuacaoBolicheTest {
 	public void umJogoQueTenhaUmaOuMaisRodadasComPontuacaoMaiorQueDezDeveResultarEmUmaExcessaoDoTipoArgumentoIlegal() {
 		final int[] pinosDerrubados = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 2, 3, 0, 0 };
 		
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubados));
+		Exception exception = assertThrows(ValueBiggerThanExpectedException.class, () -> calculadoraPontuacaoBoliche.pontuacaoDoJogo(pinosDerrubados));
 		assertEquals("Sentimos muito! Algo não ocorreu bem :( , Algumas jogadas possuem valor maior do que 10.", exception.getMessage());
 	}
 

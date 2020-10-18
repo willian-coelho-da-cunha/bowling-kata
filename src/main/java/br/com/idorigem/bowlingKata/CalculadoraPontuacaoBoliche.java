@@ -1,38 +1,48 @@
 package br.com.idorigem.bowlingKata;
 
+import br.com.idorigem.bowlingKata.exception.MatchesQuantityBiggerThanExpectedException;
+import br.com.idorigem.bowlingKata.exception.NegativeValueException;
+import br.com.idorigem.bowlingKata.exception.ValueBiggerThanExpectedException;
+
 public class CalculadoraPontuacaoBoliche {
 
 	private void validarJogadas(int[] jogadas) {
 		if (jogadas != null) {
-			for(int jogada : jogadas) {
+			for (int jogada : jogadas) {
 				if (jogada < 0) {
-					throw new IllegalArgumentException(
-						"Sentimos muito! Algo não ocorreu bem :( , Algumas jogadas possuem valor negativo."
-					);
+					throw new NegativeValueException();
 				} else if (jogada > 10) {
-					throw new IllegalArgumentException(
-						"Sentimos muito! Algo não ocorreu bem :( , Algumas jogadas possuem valor maior do que 10."
-					);
+					throw new ValueBiggerThanExpectedException();
 				}
 			}
 		} else {
-			throw new NullPointerException(
-				"Sentimos muito! Algo não ocorreu bem :( , O argumento informado ao método não pode ser null."
-			);
+			throw new NullPointerException("Sentimos muito! Algo não ocorreu bem :( , O argumento informado ao método não pode ser null.");
 		}
 	}
 
 	private void validarRodadas(int[] jogadas) {
 		byte quantidadeRodadas = 0;
+		byte quantidadeJogadas = 0;
 
-		for(int jogada : jogadas) {
-			quantidadeRodadas += jogada == 10 ? 2 : 1;
+		for (int jogada : jogadas) {
+			if (jogada == 10) {
+				quantidadeRodadas++;
+				quantidadeJogadas = 0;
+			} else {
+				quantidadeJogadas++;
+				if (quantidadeJogadas == 2) {
+					quantidadeRodadas++;
+					quantidadeJogadas = 0;
+				}
+			}
 		}
 
-		if (!(quantidadeRodadas == 24 || quantidadeRodadas == 23 || quantidadeRodadas == 22 || quantidadeRodadas == 21 || quantidadeRodadas == 20)) {
-			throw new IllegalArgumentException(
-				"Sentimos muito! Algo não ocorreu bem :( , A quantidade de rodadas é diferente do que o esperado. Por gentileza, verifique os valores informados."
-			);
+		if (quantidadeRodadas != 10 && quantidadeRodadas != 11 && quantidadeRodadas != 12) {
+			throw new MatchesQuantityBiggerThanExpectedException();
+		} else if (quantidadeJogadas != 0) {
+			if (jogadas[jogadas.length - 3] != 10 && (jogadas[jogadas.length - 3] + jogadas[jogadas.length - 2]) != 10) {
+				throw new MatchesQuantityBiggerThanExpectedException();
+			}
 		}
 	}
 
